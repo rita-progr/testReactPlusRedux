@@ -1,0 +1,17 @@
+.Navbar{
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EDEDED;
+  padding: 0 1rem;
+}
+.burger {
+  margin-right: auto;
+}
+h1 {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+}
