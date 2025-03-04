@@ -8,9 +8,10 @@ const App = () => {
     const apiKey = 'vEJwp3nmtqMIO6FDqQwyQdjbTzJcbdAh';
     const endpoint = 'https://api.nytimes.com/svc/archive/v1/2024/1.json';
     const getData = () => {
-        fetch(`${endpoint}?api-key=${apiKey}`)
+        fetch('/api/svc/archive/v1/2024/1.json?api-key=vEJwp3nmtqMIO6FDqQwyQdjbTzJcbdAh')
             .then(res => res.json())
             .then(data => console.log(data))
+            .catch(error => console.error('Ошибка:', error));
     }
     useEffect(() => {
         getData()

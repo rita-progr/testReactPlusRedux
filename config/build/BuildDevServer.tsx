@@ -7,5 +7,14 @@ return {
     open: true,
     historyApiFallback:true,
     hot: true,
+    proxy: [
+        {
+            context: ["/api"],
+            target: "https://api.nytimes.com",
+            changeOrigin: true,
+            pathRewrite: { "^/api": "" },
+            secure: false,
+        },
+    ],
 }
 }
