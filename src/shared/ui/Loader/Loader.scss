@@ -1,5 +1,5 @@
 .loader {
-  color: #fff;
+  color: #717cff;
   font-size: 10px;
   width: 1em;
   height: 1em;
@@ -8,6 +8,16 @@
   text-indent: -9999em;
   animation: mulShdSpin 1.3s infinite linear;
   transform: translateZ(0);
+}
+.loader-wrap{
+  //position: fixed;
+  //top:50%;
+  height: 100vh;
+  //left:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //height: 100vh - var(--navbar-height);
 }
 
 @keyframes mulShdSpin {

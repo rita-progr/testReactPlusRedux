@@ -1,0 +1,31 @@
+.SideBar{
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  top:0;
+  position: fixed;
+  display: none;
+  background: #FFFFFF;
+  padding:10rem 1rem;
+  font-size: var(--font-m);
+  font-weight: bold;
+  letter-spacing: var(--letter-spacing);
+}
+
+.show{
+  display: block;
+}
+
+.links{
+  display: flex;
+  flex-direction: column;
+  gap:1.5rem;
+}
+
+.close{
+  z-index: 1000;
+  position: absolute;
+  top: 0.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
+}

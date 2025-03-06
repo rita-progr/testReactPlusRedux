@@ -1,7 +1,8 @@
-// export interface NewsSchema {
-//     value:number;
-// }
+import {ToggleSchema} from "enteties/Toggle";
+import {NewsSchema} from "enteties/News";
+
 
 export interface StateSchema {
-    // news: NewsSchema;
+    toggleState: ToggleSchema;
+    newsState: NewsSchema;
 }

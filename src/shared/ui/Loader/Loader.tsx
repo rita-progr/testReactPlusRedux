@@ -7,8 +7,10 @@ interface LoaderProps{
 
 export const Loader = ({className}:LoaderProps) => {
     return (
-        <div className={classNames('loader-wrap', {}, [className])}>
-            <span className={"loader"}></span>
+        <div className={classNames('loader-wrap')}>
+             <span className={classNames('loader', {}, [className])}>
+        </span>
         </div>
+
     )
 }

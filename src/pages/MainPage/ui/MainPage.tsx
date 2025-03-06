@@ -1,5 +1,6 @@
-import  './MainPage.scss';
+import cls from './MainPage.module.scss';
 import {classNames} from "shared/lib/classNames/classNames";
+import {News} from "enteties/News";
 
 interface MainPageProps{
     className?: string;
@@ -7,8 +8,8 @@ interface MainPageProps{
 
 export const MainPage = ({className}:MainPageProps) => {
     return (
-        <div className={classNames('MainPage', {},[className])}>
-
+        <div className={classNames(cls.MainPage, {},[className])}>
+            <News/>
         </div>
     )
 }
