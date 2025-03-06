@@ -2,6 +2,8 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {NewsItem} from "enteties/News/model/types/newsSchema";
 import {StateSchema} from "app/providers/StoreProvider";
 import {formatDate} from "shared/ui/FormatDate/formatDate";
+import {ThunkDispatch} from "redux-thunk";
+import {UnknownAction} from "redux";
 
 const groupNewsByDate = (news: NewsItem[]) => {
     return news.reduce((acc, item) => {
@@ -19,10 +21,11 @@ export const fetchNews = createAsyncThunk<Record<string, NewsItem[]>, void, { st
     async (_, { getState }) => {
         const state = getState();
         const { currentMonth, currentYear } = state.newsState;
+        console.log('Fetching news for:', currentYear, currentMonth);
 
         try {
             const response = await fetch(
-                `/api/svc/archive/v1/${currentYear}/${currentMonth}.json?api-key=6LDBpwvh0PAONqBhRFXesvbJG380QJaY&limit=10`
+                `/api/svc/archive/v1/${currentYear}/${currentMonth}.json?api-key=cZsxaBjnL7G6Rs0XCepugJ0LiaxHGnwz&limit=10`
             );
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -62,30 +65,34 @@ export const fetchNews = createAsyncThunk<Record<string, NewsItem[]>, void, { st
         }
     }
 );
-// export const startNewsPolling = (dispatch: any, getState: any) => {
-//     const interval = setInterval(async () => {
-//         const resultAction = await dispatch(fetchNews());
-//         if (fetchNews.fulfilled.match(resultAction)) {
-//             const currentNews = getState().news.newsItems;
-//             const newNews = resultAction.payload;
-//
-//
-//             const hasNewContent = newNews.some(
-//                 (newItem: NewsItem) => !currentNews.find((item: NewsItem) => item.id === newItem.id)
-//             );
-//
-//             if (hasNewContent) {
-//                 console.log('Обнаружены новые новости:', newNews);
-//
-//             } else {
-//                 console.log('Новых новостей нет');
-//             }
-//         } else {
-//             console.error('Ошибка при обновлении новостей:', resultAction.payload);
-//         }
-//     }, 30000);
-//
-//
-//     return () => clearInterval(interval);
-// };
 
+const hasNewNews = (currentNews: Record<string, NewsItem[]>, newNews: Record<string, NewsItem[]>): boolean => {
+
+    for (const [date, newsItems] of Object.entries(newNews)) {
+        if (!currentNews[date] || currentNews[date].length !== newsItems.length) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export const startNewsPolling = (dispatch: ThunkDispatch<StateSchema, unknown, UnknownAction>, getState: () => StateSchema) => {
+    const interval = setInterval(async () => {
+        const resultAction = await dispatch(fetchNews());
+        if (fetchNews.fulfilled.match(resultAction)) {
+            const currentNews = getState().newsState.news;
+            const newNews = resultAction.payload;
+
+
+            if (hasNewNews(currentNews, newNews)) {
+                console.log('Обнаружены новые новости:', newNews);
+            } else {
+                console.log('Новых новостей нет');
+            }
+        } else {
+            console.error('Ошибка при обновлении новостей:', resultAction.payload);
+        }
+    }, 30000);
+
+    return () => clearInterval(interval);
+};
